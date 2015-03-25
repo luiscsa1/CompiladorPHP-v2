@@ -55,19 +55,17 @@ import java.io.Reader;
     reglas lexicas.
 */
    
-/*  Un salto de linea es un \n, \r o \r\n dependiendo del SO   */
-Salto = \r|\n|\r\n
-   
-/* Espacio es un espacio en blanco, tabulador \t, salto de linea 
-    o avance de pagina \f, normalmente son ignorados */
-Espacio     = {Salto} | [ \t\f]
-   
-/* Una literal entera es un numero 0 oSystem.out.println("\n*** Generado " + archNombre + "***\n"); un digito del 1 al 9 
-    seguido de 0 o mas digitos del 0 al 9 */
-Entero = 0 | [1-9][0-9]*
-
-/*Creamos un identificador*/
-Identificador = [a-zA-Z][a-zA-Z0-9]*
+LETRA=[a-zA-Z_][a-zA-Z0-9_]*
+DIGITO=[+-]?[0-9]+
+CADENA=[\"][a-zA-Z0-9 ]*[\"]
+FLOAT=[+-]?[0-9]+[.][0-9]+
+MF=[+-]?[0-9]+[.]+[a-zA-Z_0-9]*
+COMENT_BLOQUE = [/][*].*[*][/]
+CARACTER=[\'][a-zA-Z0-9][\']
+MD=[+-]?[0-9]+[a-zA-Z_][0-9]*
+VARIABLE=[\$][a-zA-Z_]+[0-9]*
+CONJUNCION=[{}[]()]
+ESPACIO=[ \t\r\n]
 
 %% //fin de opciones
 /* -------------------- Seccion de reglas lexicas ------------------ */
@@ -85,31 +83,36 @@ Identificador = [a-zA-Z][a-zA-Z0-9]*
    
 <YYINITIAL> {
    
-    /* Regresa que el token SEMI declarado en la clase sym fue encontrado. */
-    ";"                { System.out.print(" ; ");
-                            return symbol(sym.SEMI); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-  
-    ","				   {  System.out.print(" , ");
-						  return symbol(sym.COMA); }
-    "="				   {  System.out.print(" = ");
-						  return symbol(sym.IGUAL); }
-	
-	"int"				   {  System.out.print(" int ");
-						  return symbol(sym.INT); }
-						  
-	"float"				   {  System.out.print(" float ");
-						  return symbol(sym.FLOAT); }
+ /*Tokens a utilizar en PHP*/
 
-	
-	{Identificador} { System.out.print(yytext());
-					  return symbol(sym.ID);}   
+/*Tokens de espacio y comentarios*/   
 
-        {Entero} { System.out.print(yytext());
-					  return symbol(sym.ENTERO);}                         
-  
-    /* No hace nada si encuentra el espacio en blanco */
-    {Espacio}       { /* ignora el espacio */ } 
+{ESPACIO} {/*Ignore*/}
+ "//".* {/*Ignore*/}
+{COMENT_BLOQUE} {/*Ignore*/}
+
+/*Tokens en general*/
+   
+";" { System.out.print(" ; "); return symbol(sym.PUNTOYCOMA); }
+"," { System.out.print(" , "); return symbol(sym.COMA); }
+"=" {  System.out.print(" = ");return symbol(sym.IGUAL); }
+	
+
+
+/*Tokens de Expresiones Regulares*/
+	
+{Identificador} { System.out.print(yytext()); return symbol(sym.ID);}   
+{DIGITO} { System.out.print(yytext()); return symbol(sym.ENTERO);}                         
+{LETRA} { System.out.print(yytext()); return symbol(sym.LETRA);}
+{CADENA} { System.out.print(yytext()); return symbol(sym.CADENA);}
+{FLOAT} { System.out.print(yytext()); return symbol(sym.FLOAT);}
+{VARIABLE} { System.out.print(yytext()); return symbol(sym.VARIABLE);}
+{MF} { System.out.print(yytext()); return symbol(sym.MF);}
+{CARACTER} { System.out.print(yytext()); return symbol(sym.CARACTER);}
+{MD} { System.out.print(yytext()); return symbol(sym.MD);}
+{COMENT_BLOQUE} {/*Ignore*/}
+. {return ERROR;} { System.out.print(yytext()); return symbol(sym.);}
+    
 }
 /* Si el token contenido en la entrada no coincide con ninguna regla
     entonces se marca un token ilegal */
