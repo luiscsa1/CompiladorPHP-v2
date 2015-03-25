@@ -64,8 +64,8 @@ terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHE
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
 
-non terminal Object    expr_list, expr_part;
-                       
+non terminal Object    expr_list, expr_part, expr_var, expr_op, expr_if, expr_comp, tipo_comp;
+non terminal Integer tipo_dato;                      
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
    
 /*
@@ -73,11 +73,50 @@ non terminal Object    expr_list, expr_part;
   Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
 */
   
-expr_list ::= expr_list expr_part
+expr_list ::= expr_list expr_part 
             | expr_part
 			;
 
-expr_part ::= expr_tipo_de_dato PUNTOYCOMA {:System.out.println(" <--- Sintaxis Correcta");:};
-		 
-/***********************************************/
+expr_part ::= expr_var PUNTOYCOMA
+            | expr_op PUNTOYCOMA
+            | expr_if
+            ;
+            
+/*GRAMATICA PARA DECLARACION DE VARIABLES*/
+expr_var ::=  VARIABLE
+            | VARIABLE ASIGNACION DIGITO
+            | VARIABLE ASIGNACION CADENA
+            | VARIABLE ASIGNACION CARACTER
+            | VARIABLE ASIGNACION FLOAT
+            | VARIABLE ASIGNACION expr_op
+            ; 
+
+expr_op ::= tipo_dato MAS tipo_dato
+          | tipo_dato MENOS tipo_dato
+          | tipo_dato MULTIPLICACION tipo_dato
+          | tipo_dato DIVISION tipo_dato
+          ;
+
+expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER
+            ;
+
+expr_comp ::= tipo_dato tipo_comp tipo_dato
+            ;
+            
+tipo_comp ::= AND
+            | OR
+            | IGUAL
+            | MAYORIGUAL
+            | MENORIGUAL
+            | MENOR
+            | MAYOR
+            | IDENTICO
+            | DIFERENTE
+            ; 
+
+tipo_dato ::= VARIABLE 
+            | DIGITO
+            | FLOAT
+            ;
+/***********************************************************************************************/
 

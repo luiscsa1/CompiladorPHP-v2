@@ -71,7 +71,7 @@ public class EjemploCUP {
                      */
                     String[] archivoPrueba = {"profe.in"};
                     AnalizadorSintactico.main(archivoPrueba);
-                    System.out.println("Ejecutado!");
+                    System.out.println("Sintaxis del programa correcta.\n");
                     break;
                 }
                 case SALIR: {

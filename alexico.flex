@@ -96,7 +96,7 @@ ESPACIO=[ \t\r\n]
 "}" {System.out.print(yytext()); return symbol(sym.LLAVEDER);}
 "(" {System.out.print(yytext()); return symbol(sym.PARENTESISIZQ);}
 ")" {System.out.print(yytext()); return symbol(sym.PARENTESISDER);}
-"[" {System.out.print(yytext()); return symbol(sym.CORCHETEIZQ);;}
+"[" {System.out.print(yytext()); return symbol(sym.CORCHETEIZQ);}
 "]" {System.out.print(yytext()); return symbol(sym.CORCHETEDER);}
 "\'" {System.out.print(yytext()); return symbol(sym.COMILLASIMPLE);}
 "\"" {System.out.print(yytext()); return symbol(sym.COMILLADOBLE);}
@@ -121,7 +121,7 @@ ESPACIO=[ \t\r\n]
 "?>" {System.out.print(yytext()); return symbol(sym.FINAL);}
 "do" {System.out.print(yytext()); return symbol(sym.DO);}
 "else" {System.out.print(yytext()); return symbol(sym.ELSE);}
-"elseif" {System.out.print(yytext()); return symbol(sym.ELSEIF;}
+"elseif" {System.out.print(yytext()); return symbol(sym.ELSEIF);}
 "endfor" {System.out.print(yytext()); return symbol(sym.ENDFOR);}
 "endif" {System.out.print(yytext()); return symbol(sym.ENDIF);}
 "endswitch" {System.out.print(yytext()); return symbol(sym.ENDSWITCH);}

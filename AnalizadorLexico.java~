@@ -828,7 +828,7 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
           }
         case 74: break;
         case 15: 
-          { System.out.print(yytext()); return symbol(sym.CORCHETEIZQ);;
+          { System.out.print(yytext()); return symbol(sym.CORCHETEIZQ);
           }
         case 75: break;
         case 16: 
@@ -976,7 +976,7 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
           }
         case 111: break;
         case 52: 
-          { System.out.print(yytext()); return symbol(sym.ELSEIF;
+          { System.out.print(yytext()); return symbol(sym.ELSEIF);
           }
         case 112: break;
         case 53: 
