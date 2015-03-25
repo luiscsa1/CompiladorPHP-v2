@@ -92,17 +92,61 @@ ESPACIO=[ \t\r\n]
 {COMENT_BLOQUE} {/*Ignore*/}
 
 /*Tokens en general*/
-   
-";" { System.out.print(" ; "); return symbol(sym.PUNTOYCOMA); }
-"," { System.out.print(" , "); return symbol(sym.COMA); }
-"=" {  System.out.print(" = ");return symbol(sym.IGUAL); }
-	
-
-
+"{" {System.out.print(yytext()); return symbol(sym.LLAVEIZQ);}
+"}" {System.out.print(yytext()); return symbol(sym.LLAVEDER);}
+"(" {System.out.print(yytext()); return symbol(sym.PARENTESISIZQ);}
+")" {System.out.print(yytext()); return symbol(sym.PARENTESISDER);}
+"[" {System.out.print(yytext()); return symbol(sym.CORCHETEIZQ);;}
+"]" {System.out.print(yytext()); return symbol(sym.CORCHETEDER);}
+"\'" {System.out.print(yytext()); return symbol(sym.COMILLASIMPLE);}
+"\"" {System.out.print(yytext()); return symbol(sym.COMILLADOBLE);}
+"." {System.out.print(yytext()); return symbol(sym.PUNTO);} 
+"," {System.out.print(yytext()); return symbol(sym.COMA);} 
+";" {System.out.print(yytext()); return symbol(sym.PUNTOYCOMA);} 
+">" {System.out.print(yytext()); return symbol(sym.MAYOR);}
+"<" {System.out.print(yytext()); return symbol(sym.MENOR);}
+"=" {System.out.print(yytext()); return symbol(sym.ASIGNACION);}
+"==" {System.out.print(yytext()); return symbol(sym.IGUAL);}
+"!=" {System.out.print(yytext()); return symbol(sym.DIFERENTE);}
+"+" {System.out.print(yytext()); return symbol(sym.MAS);}
+"-" {System.out.print(yytext()); return symbol(sym.MENOS);}
+"*" {System.out.print(yytext()); return symbol(sym.MULTIPLICACION);}
+"/" {System.out.print(yytext()); return symbol(sym.DIVISION);}
+"echo" {System.out.print(yytext()); return symbol(sym.ECHO);}
+"array" {System.out.print(yytext()); return symbol(sym.ARRAY);}
+"&&" {System.out.print(yytext()); return symbol(sym.AND);}
+"||" {System.out.print(yytext()); return symbol(sym.OR);}
+"break" {System.out.print(yytext()); return symbol(sym.BREAK);}
+"case" {System.out.print(yytext()); return symbol(sym.CASE);}
+"?>" {System.out.print(yytext()); return symbol(sym.FINAL);}
+"do" {System.out.print(yytext()); return symbol(sym.DO);}
+"else" {System.out.print(yytext()); return symbol(sym.ELSE);}
+"elseif" {System.out.print(yytext()); return symbol(sym.ELSEIF;}
+"endfor" {System.out.print(yytext()); return symbol(sym.ENDFOR);}
+"endif" {System.out.print(yytext()); return symbol(sym.ENDIF);}
+"endswitch" {System.out.print(yytext()); return symbol(sym.ENDSWITCH);}
+"endwhile" {System.out.print(yytext()); return symbol(sym.ENDWHILE);}
+"switch" {System.out.print(yytext()); return symbol(sym.SWITCH);}
+"while" {System.out.print(yytext()); return symbol(sym.WHILE);}
+"for" {System.out.print(yytext()); return symbol(sym.FOR);}
+"function" {System.out.print(yytext()); return symbol(sym.FUNCTION);}
+"if" {System.out.print(yytext()); return symbol(sym.IF);}
+"--" {System.out.print(yytext()); return symbol(sym.DECREMENTO);}
+"++" {System.out.print(yytext()); return symbol(sym.INCREMENTO);}
+"include" {System.out.print(yytext()); return symbol(sym.INCLUDE);}
+">=" {System.out.print(yytext()); return symbol(sym.MAYORIGUAL);}
+"===" {System.out.print(yytext()); return symbol(sym.IDENTICO);}
+"!=" {System.out.print(yytext()); return symbol(sym.DIFERENTE);}
+"!==" {System.out.print(yytext()); return symbol(sym.NOIDENTICO);}
+"<=" {System.out.print(yytext()); return symbol(sym.MENORIGUAL);}
+"<?php" {System.out.print(yytext()); return symbol(sym.INICIO);}
+"<?" {System.out.print(yytext()); return symbol(sym.INICIO);}
+"<%" {System.out.print(yytext()); return symbol(sym.INICIO);}
+"print" {System.out.print(yytext()); return symbol(sym.PRINT);}
+"return" {System.out.print(yytext()); return symbol(sym.RETURN);}
+"static" {System.out.print(yytext()); return symbol(sym.STATIC);}
 /*Tokens de Expresiones Regulares*/
-	
-{Identificador} { System.out.print(yytext()); return symbol(sym.ID);}   
-{DIGITO} { System.out.print(yytext()); return symbol(sym.ENTERO);}                         
+{DIGITO} { System.out.print(yytext()); return symbol(sym.DIGITO);}    
 {LETRA} { System.out.print(yytext()); return symbol(sym.LETRA);}
 {CADENA} { System.out.print(yytext()); return symbol(sym.CADENA);}
 {FLOAT} { System.out.print(yytext()); return symbol(sym.FLOAT);}
@@ -111,8 +155,7 @@ ESPACIO=[ \t\r\n]
 {CARACTER} { System.out.print(yytext()); return symbol(sym.CARACTER);}
 {MD} { System.out.print(yytext()); return symbol(sym.MD);}
 {COMENT_BLOQUE} {/*Ignore*/}
-. {return ERROR;} { System.out.print(yytext()); return symbol(sym.);}
-    
+
 }
 /* Si el token contenido en la entrada no coincide con ninguna regla
     entonces se marca un token ilegal */

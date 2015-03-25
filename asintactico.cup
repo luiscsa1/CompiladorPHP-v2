@@ -1,5 +1,3 @@
- 
-   
 /* ---------------Seccion de declaraciones preliminares--------------------*/
 package ejemplocup;
 
@@ -58,7 +56,7 @@ parser code {:
    Terminales que no tienen un valor son listados primero, los terminales que
    tienen un valor como los enteros son listados en la segunda o demas lineas. */
    
-terminal           SEMI, ID, COMA, INT, FLOAT, IGUAL, ENTERO;
+terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHETEDER,  COMILLASIMPLE, COMILLADOBLE, PUNTO, COMA, PUNTOYCOMA, MAYOR, MENOR, ASIGNACION, IGUAL, DIFERENTE, MAS, MENOS, MULTIPLICACION, DIVISION, ECHO, ARRAY, AND, OR, BREAK, CASE, FINAL, DO, ELSE, ELSEIF, ENDFOR, ENDIF, ENDSWITCH, ENDWHILE, SWITCH, WHILE, FOR, FUNCTION, IF, DECREMENTO, INCREMENTO, INCLUDE, MAYORIGUAL, IDENTICO, NOIDENTICO, MENORIGUAL, INICIO, PRINT, RETURN, STATIC, DIGITO, LETRA, CADENA, FLOAT, VARIABLE, MF, CARACTER, MD;
    
 /* No terminales usados en la seccion gramatical. 
 
@@ -66,7 +64,7 @@ terminal           SEMI, ID, COMA, INT, FLOAT, IGUAL, ENTERO;
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
 
-non terminal Object    expr_list, expr_part, variable, expr_tipo_de_dato, tipo_dato, ejemplo;
+non terminal Object    expr_list, expr_part;
                        
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
    
@@ -74,33 +72,12 @@ non terminal Object    expr_list, expr_part, variable, expr_tipo_de_dato, tipo_d
   Precedencia de los no terminales, no sirve con simbolos terminales.
   Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
 */
-  /*precedence left OP_SUMA, OP_RESTA; 
-  precedence left OP_MULT;*/
-
-
-// Gramatica para detectar variables tipo entero
-// Ejemplo>> int a, b, c;
+  
 expr_list ::= expr_list expr_part
             | expr_part
 			;
 
-expr_part ::= expr_tipo_de_dato SEMI {:System.out.println(" <--- Sintaxis Correcta");:};
+expr_part ::= expr_tipo_de_dato PUNTOYCOMA {:System.out.println(" <--- Sintaxis Correcta");:};
 		 
-expr_tipo_de_dato::= tipo_dato variable          
-            |variable
-	 ;
-
-tipo_dato::=INT
-            |FLOAT
-            ;
-
-variable::= variable COMA ID
-            |ID IGUAL ENTERO
-            |variable COMA ID IGUAL ENTERO
-            |ID 
-	;
-
-			
-
 /***********************************************/
 
