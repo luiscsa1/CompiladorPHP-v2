@@ -55,7 +55,7 @@ import java.io.Reader;
     reglas lexicas.
 */
    
-LETRA=[a-zA-Z_][a-zA-Z0-9_]*
+ID=[a-zA-Z_][a-zA-Z0-9_]*
 DIGITO=[+-]?[0-9]+
 CADENA=[\"][a-zA-Z0-9 ]*[\"]
 FLOAT=[+-]?[0-9]+[.][0-9]+
@@ -147,7 +147,7 @@ ESPACIO=[ \t\r\n]
 "static" {System.out.print(yytext()); return symbol(sym.STATIC);}
 /*Tokens de Expresiones Regulares*/
 {DIGITO} { System.out.print(yytext()); return symbol(sym.DIGITO);}    
-{LETRA} { System.out.print(yytext()); return symbol(sym.LETRA);}
+{ID} { System.out.print(yytext()); return symbol(sym.ID);}
 {CADENA} { System.out.print(yytext()); return symbol(sym.CADENA);}
 {FLOAT} { System.out.print(yytext()); return symbol(sym.FLOAT);}
 {VARIABLE} { System.out.print(yytext()); return symbol(sym.VARIABLE);}

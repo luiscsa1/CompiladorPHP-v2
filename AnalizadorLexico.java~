@@ -776,7 +776,7 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
           }
         case 61: break;
         case 2: 
-          { System.out.print(yytext()); return symbol(sym.LETRA);
+          { System.out.print(yytext()); return symbol(sym.ID);
           }
         case 62: break;
         case 3: 

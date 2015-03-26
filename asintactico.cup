@@ -56,7 +56,7 @@ parser code {:
    Terminales que no tienen un valor son listados primero, los terminales que
    tienen un valor como los enteros son listados en la segunda o demas lineas. */
    
-terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHETEDER,  COMILLASIMPLE, COMILLADOBLE, PUNTO, COMA, PUNTOYCOMA, MAYOR, MENOR, ASIGNACION, IGUAL, DIFERENTE, MAS, MENOS, MULTIPLICACION, DIVISION, ECHO, ARRAY, AND, OR, BREAK, CASE, FINAL, DO, ELSE, ELSEIF, ENDFOR, ENDIF, ENDSWITCH, ENDWHILE, SWITCH, WHILE, FOR, FUNCTION, IF, DECREMENTO, INCREMENTO, INCLUDE, MAYORIGUAL, IDENTICO, NOIDENTICO, MENORIGUAL, INICIO, PRINT, RETURN, STATIC, DIGITO, LETRA, CADENA, FLOAT, VARIABLE, MF, CARACTER, MD;
+terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHETEDER,  COMILLASIMPLE, COMILLADOBLE, PUNTO, COMA, PUNTOYCOMA, MAYOR, MENOR, ASIGNACION, IGUAL, DIFERENTE, MAS, MENOS, MULTIPLICACION, DIVISION, ECHO, ARRAY, AND, OR, BREAK, CASE, FINAL, DO, ELSE, ELSEIF, ENDFOR, ENDIF, ENDSWITCH, ENDWHILE, SWITCH, WHILE, FOR, FUNCTION, IF, DECREMENTO, INCREMENTO, INCLUDE, MAYORIGUAL, IDENTICO, NOIDENTICO, MENORIGUAL, INICIO, PRINT, RETURN, STATIC, DIGITO, ID, CADENA, FLOAT, VARIABLE, MF, CARACTER, MD;
    
 /* No terminales usados en la seccion gramatical. 
 
@@ -64,7 +64,8 @@ terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHE
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
 
-non terminal Object    expr_list, expr_part, expr_var, expr_op, expr_if, expr_comp, tipo_comp;
+non terminal Object    expr_list, expr_part, expr_var, expr_op, expr_if, expr_comp, tipo_comp, expr_while, expr_for, content_for, E1, E2, E3, incr_for, cond_FOR, init_for, comp_for, incr, expr_echo, dato, expr_func, body_func, start_inicio, bloque;
+
 non terminal Integer tipo_dato;                      
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
    
@@ -73,13 +74,19 @@ non terminal Integer tipo_dato;
   Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
 */
   
+/*LISTA DE EXPRESIONES (TODO EL PROGRAMA)*/
 expr_list ::= expr_list expr_part 
             | expr_part
 			;
-
-expr_part ::= expr_var PUNTOYCOMA
+/*POSIBLES EXPRESIONES DENTRO DEL PROGRAMA*/
+expr_part ::= start_inicio
+            | expr_var PUNTOYCOMA
             | expr_op PUNTOYCOMA
             | expr_if
+            | expr_while
+            | expr_for
+            | expr_echo PUNTOYCOMA
+            | expr_func
             ;
             
 /*GRAMATICA PARA DECLARACION DE VARIABLES*/
@@ -90,19 +97,17 @@ expr_var ::=  VARIABLE
             | VARIABLE ASIGNACION FLOAT
             | VARIABLE ASIGNACION expr_op
             ; 
-
+/*GRAMATICA PARA OPERACIONES*/
 expr_op ::= tipo_dato MAS tipo_dato
           | tipo_dato MENOS tipo_dato
           | tipo_dato MULTIPLICACION tipo_dato
           | tipo_dato DIVISION tipo_dato
           ;
-
+/*GRAMATICA PARA EL IF*/
 expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER
             ;
-
 expr_comp ::= tipo_dato tipo_comp tipo_dato
             ;
-            
 tipo_comp ::= AND
             | OR
             | IGUAL
@@ -113,10 +118,76 @@ tipo_comp ::= AND
             | IDENTICO
             | DIFERENTE
             ; 
-
 tipo_dato ::= VARIABLE 
             | DIGITO
             | FLOAT
             ;
+
+/*GRAMATICA PARA EL WHILE*/
+expr_while ::= WHILE PARENTESISIZQ expr_comp PARENTESISDER
+            ;
+            
+/*GRAMATICA PARA EL FOR*/
+expr_for ::=  FOR PARENTESISIZQ content_for PARENTESISDER
+            ;
+
+content_for ::= E1 PUNTOYCOMA E2 PUNTOYCOMA E3
+			;
+			
+E1 ::= init_for
+		|
+		;
+E2 ::= cond_FOR
+		|
+		;
+E3 ::= incr_for
+		|
+		;
+init_for ::= VARIABLE ASIGNACION DIGITO 
+				;
+cond_FOR ::= VARIABLE comp_for DIGITO
+			;
+comp_for ::= DIFERENTE
+		| MAYORIGUAL
+		| MENORIGUAL
+		| MAYOR
+		| MENOR
+		| IGUAL
+		;
+
+incr_for ::= VARIABLE incr
+			;
+
+incr ::= VARIABLE MENOS DIGITO
+		   | DECREMENTO
+		   | VARIABLE MAS DIGITO
+	       | INCREMENTO
+		   ;
+/*GRAMATICA PARA PRINT Y ECHO*/
+expr_echo ::= ECHO PARENTESISIZQ dato PARENTESISDER 
+			|PRINT PARENTESISIZQ dato PARENTESISDER 
+            |ECHO dato 
+			|PRINT dato
+			;
+
+dato ::= VARIABLE
+        |CADENA
+        |CARACTER
+        ;
+/*GRAMATICA PARA DECLARAR FUNCIONES*/
+expr_func ::= FUNCTION ID PARENTESISIZQ body_func PARENTESISDER
+            ;
+            
+body_func ::= VARIABLE
+            | body_func COMA VARIABLE
+            ;
+            
+/*GRAMATICA PARA ETIQUETAS DE INICIO Y FINAL*/
+start_inicio ::= INICIO bloque FINAL
+        ;
+
+bloque ::= expr_list
+        ;
+
 /***********************************************************************************************/
 
