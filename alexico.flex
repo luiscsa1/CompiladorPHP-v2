@@ -60,7 +60,7 @@ DIGITO=[+-]?[0-9]+
 CADENA=[\"][a-zA-Z0-9 ]*[\"]
 FLOAT=[+-]?[0-9]+[.][0-9]+
 MF=[+-]?[0-9]+[.]+[a-zA-Z_0-9]*
-COMENT_BLOQUE = [/][*].*[*][/]
+COMENT_BLOQUE = [/][*](.|\n)*[*][/]
 CARACTER=[\'][a-zA-Z0-9][\']
 MD=[+-]?[0-9]+[a-zA-Z_][0-9]*
 VARIABLE=[\$][a-zA-Z_]+[0-9]*
@@ -89,7 +89,7 @@ ESPACIO=[ \t\r\n]
 
 {ESPACIO} {/*Ignore*/}
  "//".* {/*Ignore*/}
-{COMENT_BLOQUE} {/*Ignore*/}
+{COMENT_BLOQUE} {System.out.print("puto comentario de bloque");}
 
 /*Tokens en general*/
 "{" {System.out.print(yytext()); return symbol(sym.LLAVEIZQ);}
@@ -154,7 +154,6 @@ ESPACIO=[ \t\r\n]
 {MF} { System.out.print(yytext()); return symbol(sym.MF);}
 {CARACTER} { System.out.print(yytext()); return symbol(sym.CARACTER);}
 {MD} { System.out.print(yytext()); return symbol(sym.MD);}
-{COMENT_BLOQUE} {/*Ignore*/}
 
 }
 /* Si el token contenido en la entrada no coincide con ninguna regla
