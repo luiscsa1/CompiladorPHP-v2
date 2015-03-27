@@ -1,12 +1,1 @@
-<?php
-	$manuel;
-	$a = $b + 3;
-	5 + 3;
-	if($a>$b)
-	while($var1<$var2)
-	for($i=0;$i<=10;$i++)
-	print "Hola mundo";
-	echo ($manuel);
-	function restar($x)
-	function sumar($a, $b, $x, $w, $m)
-?>
+<?php ?>

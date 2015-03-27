@@ -184,6 +184,7 @@ body_func ::= VARIABLE
             
 /*GRAMATICA PARA ETIQUETAS DE INICIO Y FINAL*/
 start_inicio ::= INICIO bloque FINAL
+				|INICIO FINAL
         ;
 
 bloque ::= expr_list
