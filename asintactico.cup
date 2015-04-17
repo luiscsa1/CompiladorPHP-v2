@@ -64,7 +64,7 @@ terminal   LLAVEIZQ, LLAVEDER, PARENTESISIZQ, PARENTESISDER, CORCHETEIZQ, CORCHE
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
 
-non terminal Object    expr_list, expr_part, expr_var, expr_op, expr_if, expr_comp, tipo_comp, expr_while, expr_for, content_for, E1, E2, E3, incr_for, cond_FOR, init_for, comp_for, incr, expr_echo, dato, expr_func, body_func, start_inicio, bloque;
+non terminal Object    expr_list, expr_part, expr_var, expr_op, expr_if, expr_comp, tipo_comp, expr_while, expr_for, content_for, E1, E2, E3, incr_for, cond_FOR, init_for, comp_for, incr, expr_echo, dato, expr_func, body_func, programa, bloque;
 
 non terminal Integer tipo_dato;                      
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
@@ -73,13 +73,21 @@ non terminal Integer tipo_dato;
   Precedencia de los no terminales, no sirve con simbolos terminales.
   Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
 */
-  
+
+/*GRAMATICA PARA ETIQUETAS DE INICIO Y FINAL*/
+programa ::= INICIO bloque FINAL
+				|INICIO FINAL
+        ;
+
+bloque ::= expr_list
+        ;
+		
 /*LISTA DE EXPRESIONES (TODO EL PROGRAMA)*/
 expr_list ::= expr_list expr_part 
             | expr_part
 			;
 /*POSIBLES EXPRESIONES DENTRO DEL PROGRAMA*/
-expr_part ::= start_inicio
+expr_part ::= programa
             | expr_var PUNTOYCOMA
             | expr_op PUNTOYCOMA
             | expr_if
@@ -90,11 +98,11 @@ expr_part ::= start_inicio
             ;
             
 /*GRAMATICA PARA DECLARACION DE VARIABLES*/
-expr_var ::=  VARIABLE
-            | VARIABLE ASIGNACION DIGITO
+expr_var ::=  VARIABLE ASIGNACION DIGITO 
             | VARIABLE ASIGNACION CADENA
             | VARIABLE ASIGNACION CARACTER
             | VARIABLE ASIGNACION FLOAT
+			| VARIABLE ASIGNACION VARIABLE
             | VARIABLE ASIGNACION expr_op
             ; 
 /*GRAMATICA PARA OPERACIONES*/
@@ -104,7 +112,7 @@ expr_op ::= tipo_dato MAS tipo_dato
           | tipo_dato DIVISION tipo_dato
           ;
 /*GRAMATICA PARA EL IF*/
-expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER
+expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER 
             ;
 expr_comp ::= tipo_dato tipo_comp tipo_dato
             ;
@@ -182,13 +190,7 @@ body_func ::= VARIABLE
             | body_func COMA VARIABLE
             ;
             
-/*GRAMATICA PARA ETIQUETAS DE INICIO Y FINAL*/
-start_inicio ::= INICIO bloque FINAL
-				|INICIO FINAL
-        ;
 
-bloque ::= expr_list
-        ;
 
 /***********************************************************************************************/
 
