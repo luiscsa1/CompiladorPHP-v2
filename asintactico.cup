@@ -112,8 +112,10 @@ expr_op ::= tipo_dato MAS tipo_dato
           | tipo_dato DIVISION tipo_dato
           ;
 /*GRAMATICA PARA EL IF*/
-expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER 
-            ;
+expr_if ::= IF PARENTESISIZQ expr_comp PARENTESISDER LLAVEIZQ bloque LLAVEDER
+          | IF PARENTESISIZQ expr_comp PARENTESISDER LLAVEIZQ LLAVEDER
+		  | IF PARENTESISIZQ expr_comp PARENTESISDER
+			;
 expr_comp ::= tipo_dato tipo_comp tipo_dato
             ;
 tipo_comp ::= AND
@@ -132,11 +134,15 @@ tipo_dato ::= VARIABLE
             ;
 
 /*GRAMATICA PARA EL WHILE*/
-expr_while ::= WHILE PARENTESISIZQ expr_comp PARENTESISDER
-            ;
+expr_while ::= WHILE PARENTESISIZQ expr_comp PARENTESISDER  LLAVEIZQ bloque LLAVEDER
+            |WHILE PARENTESISIZQ expr_comp PARENTESISDER  LLAVEIZQ LLAVEDER
+			|WHILE PARENTESISIZQ expr_comp PARENTESISDER 
+			;
             
 /*GRAMATICA PARA EL FOR*/
-expr_for ::=  FOR PARENTESISIZQ content_for PARENTESISDER
+expr_for ::= FOR PARENTESISIZQ content_for PARENTESISDER  LLAVEIZQ bloque LLAVEDER
+		   | FOR PARENTESISIZQ content_for PARENTESISDER  LLAVEIZQ LLAVEDER
+		   |FOR PARENTESISIZQ content_for PARENTESISDER  
             ;
 
 content_for ::= E1 PUNTOYCOMA E2 PUNTOYCOMA E3
@@ -183,7 +189,8 @@ dato ::= VARIABLE
         |CARACTER
         ;
 /*GRAMATICA PARA DECLARAR FUNCIONES*/
-expr_func ::= FUNCTION ID PARENTESISIZQ body_func PARENTESISDER
+expr_func ::= FUNCTION ID PARENTESISIZQ body_func PARENTESISDER  LLAVEIZQ bloque LLAVEDER
+            | FUNCTION ID PARENTESISIZQ body_func PARENTESISDER  LLAVEIZQ LLAVEDER
             ;
             
 body_func ::= VARIABLE
